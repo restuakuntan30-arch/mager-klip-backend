@@ -43,17 +43,17 @@ app.get('/download', async (req, res) => {
   const tempFile = path.join(os.tmpdir(), `clip_${Date.now()}_${Math.random().toString(36).slice(2)}.mp4`);
   const sectionArg = endTs ? `*${startTs}-${endTs}` : `*${startTs}-99:99:99`;
 
-  const args = [
+ const args = [
     url,
     '--download-sections', sectionArg,
-    '-f', `best[height<=${q}][ext=mp4]/best[height<=${q}]/best`,
+    '-f', `bv*[height<=${q}]+ba/b[height<=${q}]/bv*+ba/b/best`,
+    '--merge-output-format', 'mp4',
     '--no-playlist',
-    '--force-keyframes-at-cuts',
     '-o', tempFile,
     '--no-warnings',
     '--no-progress',
-    '--socket-timeout', '30',
-    '--extractor-args', 'youtube:player_client=android,web',
+    '--socket-timeout', '60',
+    '--extractor-args', 'youtube:player_client=web,android',
   ];
 
   if (fs.existsSync(COOKIES_FILE)) {
