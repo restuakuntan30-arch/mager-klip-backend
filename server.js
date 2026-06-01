@@ -9,7 +9,6 @@ const app = express();
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 
-// Tulis cookies dari env var ke file saat startup
 const COOKIES_FILE = '/tmp/youtube_cookies.txt';
 if (process.env.YOUTUBE_COOKIES) {
   fs.writeFileSync(COOKIES_FILE, process.env.YOUTUBE_COOKIES);
@@ -43,7 +42,7 @@ app.get('/download', async (req, res) => {
   const tempFile = path.join(os.tmpdir(), `clip_${Date.now()}_${Math.random().toString(36).slice(2)}.mp4`);
   const sectionArg = endTs ? `*${startTs}-${endTs}` : `*${startTs}-99:99:99`;
 
- const args = [
+  const args = [
     url,
     '--download-sections', sectionArg,
     '-f', `bv*[height<=${q}]+ba/b[height<=${q}]/bv*+ba/b/best`,
