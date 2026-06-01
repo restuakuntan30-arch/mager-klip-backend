@@ -68,7 +68,7 @@ app.get('/formats', async (req, res) => {
 });
 
 // Download dengan multi player client
-const PLAYER_CLIENTS = ['web', 'web_safari', 'mweb', 'ios', 'android', 'tv_embedded'];
+const PLAYER_CLIENTS = ['web', 'ios', 'android'];
 
 app.get('/download', async (req, res) => {
   const { url, start, end } = req.query;
@@ -94,7 +94,7 @@ app.get('/download', async (req, res) => {
       '--no-playlist',
       '-o', tempFile,
       '--no-warnings',
-      '--socket-timeout', '60',
+      '--socket-timeout', '20',
       '--extractor-args', `youtube:player_client=${client}`,
     ];
     if (fs.existsSync(COOKIES_FILE)) args.push('--cookies', COOKIES_FILE);
